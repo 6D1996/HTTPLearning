@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/send_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="发送的数据"
+        app:layout_constraintBottom_toTopOf="@id/reply_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reply_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="接收的数据"
+        app:layout_constraintBottom_toTopOf="@id/firstLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/send_text"  />
+
+    <LinearLayout
+        android:id="@+id/firstLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/secondLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reply_text">
+
+        <Button
+            android:id="@+id/post_Vehicle_Condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求车况"></Button>
+        <Button
+            android:id="@+id/post_Video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求视频">
+        </Button>
+        <Button
+            android:id="@+id/post_Automove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求自动泊出">
+        </Button>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/firstLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:id="@+id/post_TurnOffMove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭泊车">
+        </Button>
+        <Button
+            android:id="@+id/post_callForCar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="叫车">
+        </Button>
+        <Button
+            android:id="@+id/post_IotHub_Setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求IotHub配置">
+        </Button>
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
