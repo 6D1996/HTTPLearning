@@ -18,9 +18,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    public String hostIP = "192.168.43.151:18081";//"10.6.206.20:30549"
+    public String hostIP = /*"192.168.0.108:18081";*/"10.6.206.20:30549";
     public String userId = "6D的安卓測試機";
     public String vin = "001";
+
     private static final String TAG = "";
     public TextView replyTextView,requestTextView;
     public VehicleCondition vehicleCondition;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         replyTextView =findViewById(R.id.reply_text);
         Button postVideo = findViewById(R.id.post_Video);
         postVideo.setOnClickListener(this);
-
         Button postVehicleCondition = findViewById(R.id.post_Vehicle_Condition);
         postVehicleCondition.setOnClickListener(this);
 
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String responseString=response.body().string();
                             vehicleCondition = new VehicleCondition();
                             vehicleCondition = JSON.parseObject(responseString,VehicleCondition.class);
+                            Log.d(TAG, "run: "+vehicleCondition.toString()+"\n"+responseString);
 
 
                             runOnUiThread(new Runnable() {
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void run() {
                                     Toast.makeText(MainActivity.this,"請求車況中",Toast.LENGTH_SHORT).show();
                                     replyTextView.setText(vehicleCondition.toString()+"\n"+responseString);
+
                                 }
                             });
                         }catch (Exception e){
@@ -157,6 +159,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         try {
+                            videoRequest = new VideoRequest();
+                            videoRequest.setUserId(userId);
+                            videoRequest.setVin(vin);
+                            videoRequest.setVideo_type("1");
+                            videoRequest.setServicetype("0");
+                            String videoRequestJson =JSON.toJSONString(videoRequest);
+                            requestTextView.setText(videoRequestJson);
+                            Log.d(TAG,videoRequestJson);
+                            OkHttpClient videoClient=new OkHttpClient();
+                            Request videoRequest= new Request.Builder()
+                                    .url("http://"+hostIP+"/appBackend/videoRequest")
+                                    .post(RequestBody.create(MediaType.parse("application/json"),videoRequestJson))
+                                    .build();//创造HTTP请求
+                            //执行发送的指令
+                            Response videoResponse = videoClient.newCall(videoRequest).execute();
+                            String videoResponseString=videoResponse.body().string();
+                            replyTextView.setText(videoResponseString);
+                            videoReply = new VideoReply();
+                            videoReply = JSON.parseObject(videoResponseString,VideoReply.class);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this,"請求視頻中",Toast.LENGTH_LONG).show();
+//                                    replyTextView.setText(videoReply.toString());
+                                }
+                            });
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this,"請求視頻失败！",Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                }).start();
+                /*new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
                             autoParkingRequest = new AutoParkingRequest();
                             autoParkingRequest.setUserId(userId);
                             autoParkingRequest.setVin(vin);
@@ -196,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             });
                         }
                     }
-                }).start();
+                }).start();*/
                 break;
 
             case R.id.post_TurnOffMove:

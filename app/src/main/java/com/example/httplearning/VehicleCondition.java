@@ -1,7 +1,7 @@
 package com.example.httplearning;
 
 public class VehicleCondition {
-    private String dataFields,userId,requestId,code,message;
+    private String dataResults,userId,requestId,code,message;
 
     public VehicleCondition() {
     }
@@ -14,12 +14,12 @@ public class VehicleCondition {
         this.userId = userId;
     }
 
-    public String getDataFields() {
-        return dataFields;
+    public String getDataResults() {
+        return dataResults;
     }
 
-    public void setDataFields(String dataFields) {
-        this.dataFields = dataFields;
+    public void setDataResults(String dataResults) {
+        this.dataResults = dataResults;
     }
 
     public String getRequestId() {
@@ -49,7 +49,7 @@ public class VehicleCondition {
     @Override
     public String toString() {
         return "VehicleCondition{" +
-                "dataFields='" + dataFields + '\'' +
+                "dataResults='" + dataResults + '\'' +
                 ", userId='" + userId + '\'' +
                 ", requestId='" + requestId + '\'' +
                 ", code='" + code + '\'' +
